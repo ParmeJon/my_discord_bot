@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { token } = require('./config.json')
+const weather = require('weather-js')
 const bot = new Discord.Client();
 
 const discordToken = token
@@ -23,6 +24,13 @@ bot.on('message', message => {
       break;
     case 'website':
       message.channel.send('https://www.youtube.com/jonsyvids')
+      break;
+    case 'weather':
+      weather.find({search: args[1], degreeType: 'F'}, function(err, result) {
+        if(err) message.channel.send(err);
+
+        message.channel.send(JSON.stringify(result, null, 2))
+      })
       break;
   }
 })
